@@ -20,8 +20,8 @@ public class Moving : MonoBehaviour
 
 
     [SerializeField] private TilemapCollider2D groundCollider;
+    [SerializeField] private AudioSource jumpSoundEffect;
 
-    
     delegate void InputHandler();
 
     
@@ -97,6 +97,7 @@ public class Moving : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             isGrounded = false;
+            jumpSoundEffect.Play();
         }
     }
 
