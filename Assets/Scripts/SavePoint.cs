@@ -4,29 +4,17 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-         if(other.gameObject.tag=="Player")
-        {
-            var playerManager= other.gameObject.GetComponent<Player>();
-            playerManager.respawnPoint= this.transform;
-            Destroy(this.gameObject);
-        }
-    }
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-       
+    {    if(other.gameObject.tag=="Player")
+        {
+            var playerManager= other.gameObject.GetComponent<Player>();
+            playerManager.respawnPoint= this.transform.position;
+            Destroy(this.gameObject);
+        }
     }
 }

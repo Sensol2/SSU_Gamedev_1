@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     
-    private GameObject player;
+    public GameObject player;
 
     private Player playerManager;
     void Start()
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Respawn()
     {
-        player.transform.position = playerManager.respawnPoint.position;
+        player.transform.position = playerManager.respawnPoint;
         player.SetActive(true);
     }
 }

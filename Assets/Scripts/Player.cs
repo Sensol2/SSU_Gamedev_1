@@ -10,11 +10,11 @@ public class Player : MonoBehaviour
     public float jumpPower;
     Rigidbody2D rigid;
 
-    public Transform respawnPoint;
+    public Vector3 respawnPoint;
 
     [SerializeField] private AudioSource jumpSoundEffect;
 
-    public GameManager manager;
+    public GameObject manager;
 
 
 
@@ -51,7 +51,9 @@ public class Player : MonoBehaviour
             //기쁨상태가 되면 점점 줄어드는 메서드
             //기쁨상태가 0
         }
-        } 
+    } 
+
+
 
 [SerializeField]
     private float blueball = 0;
@@ -81,7 +83,8 @@ public class Player : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        manager=GetComponent<GameManager>();
+        manager=GameObject.Find("GameManager");
+        respawnPoint=this.transform.position;
     }
 
     void FixedUpdate()
@@ -107,24 +110,12 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other) 
-    {
-     if(other.CompareTag("Trap"))
-     {
-        Die();
-     }   
-     else if(other.CompareTag("Flag"))
-     {
-      respawnPoint=  other.gameObject.transform;
-      Destroy(other);
-     }
-    }
-   
 
 
-    void Die()
+    public void Die()
     {
-      manager.RespawnPlayer();
+      var Manager= manager.GetComponent<GameManager>();
+      Manager.RespawnPlayer();
         gameObject.SetActive(false);
         
 
