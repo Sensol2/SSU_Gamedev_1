@@ -6,17 +6,53 @@ public enum EEmotionState { Joy, Surprised, Sad };
 
 public class EmotionGem : MonoBehaviour
 {
-	public EEmotionState state;
-	
-	
+    public EEmotionState state;
+    
+    private CircleCollider2D col;
+    private SpriteRenderer ren;
+    public float reproduceTime = 3.0f;
 
 
-	private void OnTriggerEnter2D(Collider2D coll)
-	{
-		Debug.Log(this.state.ToString() + " ±¸½½ÀÌ " + coll.gameObject.name + "¿¡ Ãæµ¹");
-        Destroy(this.gameObject);
-   
 
+    private void Start() {
+     col=   gameObject.GetComponent<CircleCollider2D>();
+     ren= gameObject.GetComponent<SpriteRenderer>();
     }
 
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            var player = coll.gameObject.GetComponent<Player>();
+
+            if (this.state == EEmotionState.Joy)
+            {
+                player.Red++;
+            }
+            else if (this.state == EEmotionState.Surprised)
+            {
+                player.Green++;
+            }
+            else if (this.state == EEmotionState.Sad)
+            {
+                player.Blue++;
+            }
+        }
+        Debug.Log(this.state.ToString() + " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + coll.gameObject.name + "ï¿½ï¿½ ï¿½æµ¹");
+       
+       col.enabled=false;
+       ren.enabled=false;
+        StartCoroutine(ReactivateAfterDelay());
+    }
+    private IEnumerator ReactivateAfterDelay()
+    {
+    yield return new WaitForSeconds(reproduceTime);
+
+      col.enabled=true;
+       ren.enabled=true;
+    }
+
+    
 }
+

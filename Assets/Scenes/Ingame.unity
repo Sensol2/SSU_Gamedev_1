@@ -244,6 +244,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 382102609302758649, guid: 5f61a97e3bbe8ea42a9b95320045d76c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5f61a97e3bbe8ea42a9b95320045d76c, type: 3}
@@ -995,12 +999,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 497195660}
+  - component: {fileID: 497195667}
   - component: {fileID: 497195661}
   - component: {fileID: 497195662}
   - component: {fileID: 497195664}
   - component: {fileID: 497195665}
   - component: {fileID: 497195666}
-  - component: {fileID: 497195667}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1239,8 +1243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddd31b4d3b43c84e8f3073ea13172ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  jumpPower: 10
+  maxSpeed: 0
+  jumpPower: 0
+  JoymaxSpeed: 0
+  JoyjumpPower: 0
   respawnPoint: {x: 0, y: 0, z: 0}
   jumpSoundEffect: {fileID: 0}
   manager: {fileID: 0}

@@ -8,7 +8,7 @@ public class Moving : MonoBehaviour
 {
     public float speed = 5.0f; // 이동 속도
     public float jumpHeight = 7.5f; // 점프 최대치
-    public float dashSpeed = 7.0f; // 대쉬 속도
+    public float dashSpeed = 10.0f; // 대쉬 속도
     public float dashDuration = 0.5f; // 대쉬 지속 시간
     public float dashCooldown = 1.0f; // 대쉬 쿨타임
 
@@ -22,12 +22,12 @@ public class Moving : MonoBehaviour
     [SerializeField] private TilemapCollider2D groundCollider;
     [SerializeField] private AudioSource jumpSoundEffect;
 
-    delegate void InputHandler();
+     public delegate void InputHandler();
 
     
-    InputHandler horizontalInputHandler;
-    InputHandler jumpInputHandler;
-    InputHandler dashInputHandler;
+    public InputHandler horizontalInputHandler;
+   public  InputHandler jumpInputHandler;
+    public InputHandler dashInputHandler;
     
 
     Rigidbody2D rb;
@@ -40,9 +40,9 @@ public class Moving : MonoBehaviour
 
 
     
-    horizontalInputHandler = HandleHorizontalInput;
-    jumpInputHandler = HandleJumpInput;
-    dashInputHandler = HandleDashInput;
+    horizontalInputHandler += HandleHorizontalInput;
+    jumpInputHandler += HandleJumpInput;
+    
     }
 
 
@@ -66,7 +66,8 @@ public class Moving : MonoBehaviour
         }
         horizontalInputHandler();
         jumpInputHandler();
-        dashInputHandler();
+        if(Input.GetKeyDown(KeyCode.Q))
+        dashInputHandler?.Invoke();
     }
 
     
@@ -102,11 +103,12 @@ public class Moving : MonoBehaviour
     }
 
 
-    void HandleDashInput()
+   public void HandleDashInput()
     {   
         // 대쉬 함수 - q버튼
         if (Input.GetKeyDown(KeyCode.Q) && dashCooldownTimer <= 0.0f)
         {
+            Debug.Log("Dash!");
             isDashing = true;
             dashTimer = 0.0f;
             dashCooldownTimer = dashCooldown;
