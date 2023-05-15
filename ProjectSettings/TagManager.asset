@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Flag
+  - SadBlock
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - SadBlock
   - Water
   - UI
   - 

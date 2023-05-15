@@ -6,15 +6,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    [Header("기본이동")]
-    public float maxSpeed;
-    public float jumpPower;
+
 
     [Header("기쁨상태 파라미터")]
     private float defualtmaxSpeed;
     private float defualtjumpPower;
     public float JoymaxSpeed;
     public float JoyjumpPower;
+
+    [Header("놀람상태 파라미터")]
+    bool isSurprised = false;
+
+    public float surpJumpPower;
+    public float surpSpeed;
+
+    [Header("슬픔상태 파라미터")]
+
+
+    [Header("열쇠 가지고있는지")]
+    public bool isHaveKey = false;
 
     Rigidbody2D rigid;
 
@@ -24,6 +34,8 @@ public class Player : MonoBehaviour
 
     public GameObject manager;
     private Moving moving;
+
+
 
 
     [Header("상태변화")]
@@ -41,7 +53,7 @@ public class Player : MonoBehaviour
             if (redball >= 5)
             {
                 IsJoy = true;
-                StartCoroutine(WaitAndSetIsJoy());
+                StartCoroutine(WaitAndSet(isJoy));
             }
 
         }
@@ -61,9 +73,8 @@ public class Player : MonoBehaviour
         {
             greenball = value;
             if (greenball >= 5)
-                isSurprised = true;//놀란상태
-            //기쁨상태가 되면 점점 줄어드는 메서드
-            //기쁨상태가 0
+                IsSurprised = true;
+            StartCoroutine(WaitAndSet(isSurprised));
         }
     }
 
@@ -81,9 +92,8 @@ public class Player : MonoBehaviour
         {
             blueball = value;
             if (blueball >= 5)
-                isSad = true;//슬픔상태
-            //기쁨상태가 되면 점점 줄어드는 메서드
-            //기쁨상태가 0
+                IsSad = true;
+            StartCoroutine(WaitAndSet(isSad));
         }
     }
 
@@ -100,7 +110,7 @@ public class Player : MonoBehaviour
             isJoy = value;
             if (isJoy)
             {
-               
+
                 moving.dashInputHandler += moving.HandleDashInput;
             }
             else
@@ -110,7 +120,28 @@ public class Player : MonoBehaviour
         }
     }
 
-    bool isSad = false;
+    bool IsSurprised
+    {
+        get
+        {
+            return isSurprised;
+        }
+        set
+        {
+            isSurprised = value;
+            if (isSurprised)
+            {
+                
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+
+ public   bool isSad = false;
     bool IsSad
     {
         get
@@ -130,28 +161,26 @@ public class Player : MonoBehaviour
             }
         }
     }
-    bool isSurprised = false;
+
+
 
 
 
     void Awake()
     {
-        defualtmaxSpeed = maxSpeed;
-        defualtjumpPower = jumpPower;
+        moving = this.GetComponent<Moving>();
+        defualtmaxSpeed = moving.speed;
+
+        defualtjumpPower = moving.jumpHeight;
         rigid = GetComponent<Rigidbody2D>();
         manager = GameObject.Find("GameManager");
         respawnPoint = this.transform.position;
-        moving = this.GetComponent<Moving>();
+
     }
 
 
 
-    private void SetDefaultState()
-    {
-        redball = 0;
-        blueball = 0;
-        greenball = 0;
-    }
+
 
     public void Die()
     {
@@ -163,24 +192,105 @@ public class Player : MonoBehaviour
 
     }
 
-
-
-
-
-IEnumerator WaitAndSetIsJoy()
-{
-   yield return StartCoroutine(ReduceRedBall());
-   Debug.Log("isjoy false!");
-  IsJoy =false;
-}
-
-IEnumerator ReduceRedBall()
-{
-
-    while(redball >0.1f)
+    private void SetDefaultState()
     {
-        redball -= Time.deltaTime;
-        yield return null;
+        redball = 0;
+        blueball = 0;
+        greenball = 0;
+    }
+
+
+
+    IEnumerator WaitAndSet(bool state)
+    {
+        if (state == isJoy)
+        {
+            yield return StartCoroutine(ReduceRedBall());
+            Debug.Log("isjoy false!");
+            IsJoy = false;
+        }
+        else if (state == isSurprised)
+        {
+            yield return StartCoroutine(ReduceGreenBall());
+           
+            IsSurprised = false;
+        }
+        else if (state == isSad)
+        {
+            yield return StartCoroutine(ReduceBlueBall());
+            
+            IsSad = false;
+        }
+
+
+    }
+
+    IEnumerator ReduceRedBall()
+    {
+
+        while (redball > 0.1f)
+        {
+            redball -= Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator ReduceGreenBall()
+    {
+
+        while (greenball > 0.1f)
+        {
+            greenball -= Time.deltaTime;
+            yield return null;
+        }
+    }
+       IEnumerator ReduceBlueBall()
+    {
+
+        while (blueball > 0.1f)
+        {
+           blueball -= Time.deltaTime;
+            yield return null;
+        }
+    }   
+
+public LayerMask layer;
+
+  private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(isSad &&  other.gameObject.tag=="SadBlock")
+        {
+            Physics2D.IgnoreLayerCollision(gameObject.layer,layer,true);
+            Debug.Log("1");
+     
+    }
+    }
+
+private void OnTriggerStay2D(Collider2D other) 
+{
+    if(isSad &&  other.gameObject.CompareTag("SadBlock"))
+        {
+            Physics2D.IgnoreLayerCollision(gameObject.layer,layer,true);
+      Debug.Log("2");
+    }
+    else if(!isSad &&  other.gameObject.CompareTag("SadBlock"))
+    {
+        Physics2D.IgnoreLayerCollision(gameObject.layer,layer,false);
+          Debug.Log("3");
     }
 }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        
+        if (other.CompareTag("SadBlock") && !isSad)
+        {
+            // 충돌 처리를 다시 허용
+            Physics2D.IgnoreLayerCollision(gameObject.layer,layer,false);
+             Debug.Log("4");
+        }
+    }
+
+ 
+
+
 }
