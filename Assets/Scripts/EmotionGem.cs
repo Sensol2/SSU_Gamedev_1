@@ -32,15 +32,15 @@ public class EmotionGem : MonoBehaviour
             VFXManager.instance.PlayEffect(this.transform.position, this.state);
             if (this.state == EEmotionState.Joy)
             {
-                player.Red++;
+                player.redball++;
             }
             else if (this.state == EEmotionState.Surprised)
             {
-                player.Green++;
+                player.greenball++;
             }
             else if (this.state == EEmotionState.Sad)
             {
-                player.Blue++;
+                player.blueball++;
             }
         }
         Debug.Log(this.state.ToString() + " ������ " + coll.gameObject.name + "�� �浹");

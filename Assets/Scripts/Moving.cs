@@ -26,7 +26,7 @@ public class Moving : MonoBehaviour
 
     
     public InputHandler horizontalInputHandler;
-   public  InputHandler jumpInputHandler;
+    public  InputHandler jumpInputHandler;
     public InputHandler dashInputHandler;
     
 
@@ -66,8 +66,9 @@ public class Moving : MonoBehaviour
         }
         horizontalInputHandler();
         jumpInputHandler();
+
         if(Input.GetKeyDown(KeyCode.Q))
-        dashInputHandler?.Invoke();
+            dashInputHandler?.Invoke();
     }
 
     
