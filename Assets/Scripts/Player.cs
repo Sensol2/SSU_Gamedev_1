@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
     public GameObject manager;
     private Moving moving;
-
+    public Collider2D coll;
 
 
 
@@ -171,6 +171,7 @@ public class Player : MonoBehaviour
         moving = this.GetComponent<Moving>();
         defualtmaxSpeed = moving.speed;
 
+        coll=gameObject.GetComponent<Collider2D>();
         defualtjumpPower = moving.jumpHeight;
         rigid = GetComponent<Rigidbody2D>();
         manager = GameObject.Find("GameManager");
@@ -256,39 +257,8 @@ public class Player : MonoBehaviour
 
 public LayerMask layer;
 
-  private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(isSad &&  other.gameObject.tag=="SadBlock")
-        {
-            Physics2D.IgnoreLayerCollision(gameObject.layer,layer,true);
-            Debug.Log("1");
-     
-    }
-    }
 
-private void OnTriggerStay2D(Collider2D other) 
-{
-    if(isSad &&  other.gameObject.CompareTag("SadBlock"))
-        {
-            Physics2D.IgnoreLayerCollision(gameObject.layer,layer,true);
-      Debug.Log("2");
-    }
-    else if(!isSad &&  other.gameObject.CompareTag("SadBlock"))
-    {
-        Physics2D.IgnoreLayerCollision(gameObject.layer,layer,false);
-          Debug.Log("3");
-    }
-}
-
-    private void OnTriggerExit2D(Collider2D other) {
-        
-        if (other.CompareTag("SadBlock") && !isSad)
-        {
-            // 충돌 처리를 다시 허용
-            Physics2D.IgnoreLayerCollision(gameObject.layer,layer,false);
-             Debug.Log("4");
-        }
-    }
+    
 
  
 
