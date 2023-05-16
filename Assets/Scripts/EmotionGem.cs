@@ -26,6 +26,10 @@ public class EmotionGem : MonoBehaviour
         {
             var player = coll.gameObject.GetComponent<Player>();
 
+            Debug.Log("playeffect in emotion gem");
+
+            SoundManager.instance.PlaySound(ESoundType.GemTrigger);
+            VFXManager.instance.PlayEffect(this.transform.position, this.state);
             if (this.state == EEmotionState.Joy)
             {
                 player.Red++;
