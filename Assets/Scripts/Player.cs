@@ -141,7 +141,7 @@ public class Player : MonoBehaviour
     }
 
 
- public   bool isSad = false;
+    public bool isSad = false;
     bool IsSad
     {
         get
