@@ -45,28 +45,25 @@ public class SadBlock : MonoBehaviour
             if (player.state == EPlayerState.Sad)
             {
                 boxCollider2D.enabled = false;
+                var moving = player.GetComponent<Moving>();
+                moving.ChangeGravity(0.1f);
             }
 
             else if (player.state != EPlayerState.Sad)
             {
-
+                player.Die();
                 boxCollider2D.enabled = true;
             }
 
         }
-
-
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            var player = other.GetComponent<Player>();
+            var moving = player.GetComponent<Moving>();
+            moving.RestoreGravity();
+        }
     }
 }
-//    private void OnTriggerExit2D(Collider2D other)
-//    {
-//        if (other.gameObject.tag == "Player")
-//        {
-//            var player = other.GetComponent<Player>();
-//            if ( !player.isSad)
-//            {
-//                boxCollider2D.enabled = true;
-//            }
-//        }
-//    }
-//}

@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     {
         player.transform.position = playerManager.respawnPoint;
         player.SetActive(true);
+        playerManager.InvokeCoroutine();
+        player.GetComponent<Rigidbody2D>().gravityScale = 2.5f;
     }
 }
 

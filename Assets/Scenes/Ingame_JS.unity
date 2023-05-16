@@ -625,12 +625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91034b9a81704c0c939e2fe1516455f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Body: {fileID: 294282006}
-  gravity: 50
-  runSpeed: 5
-  acceleration: 10
-  jumpHeight: 12
-  jumpsAllowed: 2
 --- !u!143 &38765913
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4909,22 +4903,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddd31b4d3b43c84e8f3073ea13172ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   JoymaxSpeed: 10
   JoyjumpPower: 10
   surpJumpPower: 20
   surpSpeed: 15
   isHaveKey: 0
   respawnPoint: {x: 0, y: 0, z: 0}
-  jumpSoundEffect: {fileID: 0}
-  manager: {fileID: 680364547}
-  coll: {fileID: 0}
   redball: 0
   greenball: 0
   blueball: 0
-  isSad: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!1 &499603796
 GameObject:
   m_ObjectHideFlags: 0
@@ -7572,7 +7560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &753750955
 MonoBehaviour:
   m_ObjectHideFlags: 0

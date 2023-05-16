@@ -12,7 +12,11 @@ public class Moving : MonoBehaviour
     public float dashDuration = 0.5f; // 대쉬 지속 시간
     public float dashCooldown = 1.0f; // 대쉬 쿨타임
 
-    private bool isGrounded = true; 
+
+    public float originalJumpHeight; // 원래 점프값
+    public float originalGravityScale = 2.5f; // 원래 중력값
+
+    public bool isGrounded = true; 
     private bool isDashing = false; 
     private float dashTimer = 0.0f; 
     private float dashCooldownTimer = 0.0f; 
@@ -34,15 +38,11 @@ public class Moving : MonoBehaviour
 
     void Start()
     {
-   
-    rb = GetComponent<Rigidbody2D>();
-  
-
-
-    
-    horizontalInputHandler += HandleHorizontalInput;
-    jumpInputHandler += HandleJumpInput;
-    
+        rb = GetComponent<Rigidbody2D>();
+        horizontalInputHandler += HandleHorizontalInput;
+        jumpInputHandler += HandleJumpInput;
+        originalGravityScale = rb.gravityScale;
+        originalJumpHeight = jumpHeight;
     }
 
 
@@ -60,7 +60,7 @@ public class Moving : MonoBehaviour
             if (dashTimer >= dashDuration)
             {
                 isDashing = false;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, GetComponent<Rigidbody2D>().velocity.y);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, rb.velocity.y);
             }
             return;
         }
@@ -77,7 +77,7 @@ public class Moving : MonoBehaviour
         // 이동 함수
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        Vector2 movement = new Vector2(horizontalInput * speed, GetComponent<Rigidbody2D>().velocity.y);
+        Vector2 movement = new Vector2(horizontalInput * speed, rb.velocity.y);
         GetComponent<Rigidbody2D>().velocity = movement;
 
         //이동방향
@@ -114,28 +114,51 @@ public class Moving : MonoBehaviour
             dashTimer = 0.0f;
             dashCooldownTimer = dashCooldown;
 
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-
             float dashDirection = lastMoveDirection;
 
-            rb.velocity = new Vector2(dashDirection * dashSpeed, rb.velocity.y);
+            // 일시적으로 중력을 0으로 만듦
+            originalGravityScale = rb.gravityScale;
+            rb.gravityScale = 0;
+
+            rb.velocity = new Vector2(dashDirection * dashSpeed, 0);
+
+            // 중력 복원
+            StartCoroutine(RestoreGravityScaleAfterDelay(originalGravityScale, dashDuration));
         }
     }
-    
 
-    
+    public void ChangeGravity(float scale)
+	{
+        rb.gravityScale = scale;
+    }
+
+    public void RestoreGravity()
+    {
+        rb.gravityScale = originalGravityScale;
+    }
+
+    public void ChangeJumpScale(float scale)
+    {
+        jumpHeight = scale;
+    }
+
+    public void RestoreJumpScale()
+    {
+        jumpHeight = originalJumpHeight;
+    }
+
+    private IEnumerator RestoreGravityScaleAfterDelay(float originalGravityScale, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        rb.gravityScale = originalGravityScale;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // 충돌 감지 함수
-        TilemapCollider2D tilemapCollider = collision.gameObject.GetComponent<TilemapCollider2D>();
-        if (tilemapCollider == null)
-        {
-        
-            return;
-        }
 
-        if (tilemapCollider == groundCollider)
+        if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
             return;

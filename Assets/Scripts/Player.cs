@@ -8,6 +8,8 @@ public enum EPlayerState { IDLE, Joy, Surprised, Sad };
 
 public class Player : MonoBehaviour
 {
+    public Sprite[] sprites;
+    SpriteRenderer spriteRenderer;
     public EPlayerState state;
 
     [Header("기쁨상태 파라미터")]
@@ -39,13 +41,15 @@ public class Player : MonoBehaviour
     void Awake()
     {
         moving = GetComponent<Moving>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         respawnPoint = this.transform.position;
+        InvokeCoroutine();
     }
 
-	private void Start()
-	{
-        StartCoroutine(ReduceBallBySec(0.1f));
-	}
+    public void InvokeCoroutine()
+    {
+        StartCoroutine(ReduceBallBySec(0.3f));
+    }
 
 	private void Update()
     {
@@ -61,8 +65,14 @@ public class Player : MonoBehaviour
         if (redball < 1.0f && greenball < 1.0f && blueball < 0.1f)
             this.state = EPlayerState.IDLE;
 
+        if (state == EPlayerState.IDLE)
+        {
+            spriteRenderer.sprite = sprites[(int)EPlayerState.IDLE];
+        }
+
         if (state == EPlayerState.Joy)
         {
+            spriteRenderer.sprite = sprites[(int)EPlayerState.Joy];
             moving.dashInputHandler += moving.HandleDashInput;
         }
         else
@@ -72,12 +82,20 @@ public class Player : MonoBehaviour
 
         if (state == EPlayerState.Surprised)
         {
-            // player 점프력 상승
+            spriteRenderer.sprite = sprites[(int)EPlayerState.Surprised];
+            moving.ChangeJumpScale(20.0f);
         }
         else
         {
-
+            moving.RestoreJumpScale();
         }
+
+
+        if (state == EPlayerState.Sad)
+        {
+            spriteRenderer.sprite = sprites[(int)EPlayerState.Sad];
+        }
+
     }
 
     public void Die()
