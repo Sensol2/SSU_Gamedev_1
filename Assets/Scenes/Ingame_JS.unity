@@ -492,6 +492,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sad_Gem (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4634588030337244314, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
 --- !u!1001 &313428557
@@ -1031,6 +1035,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sad_Gem (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4634588030337244314, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
 --- !u!1001 &439358954
@@ -1404,10 +1412,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddd31b4d3b43c84e8f3073ea13172ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JoymaxSpeed: 0
-  JoyjumpPower: 0
-  surpJumpPower: 0
-  surpSpeed: 0
+  JoymaxSpeed: 10
+  JoyjumpPower: 10
+  surpJumpPower: 20
+  surpSpeed: 15
   isHaveKey: 0
   respawnPoint: {x: 0, y: 0, z: 0}
   jumpSoundEffect: {fileID: 0}
@@ -12451,7 +12459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1589171119
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12620,6 +12628,10 @@ PrefabInstance:
     - target: {fileID: 4634588030337244314, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
       propertyPath: m_Name
       value: Sad_Gem (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634588030337244314, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
@@ -13530,6 +13542,10 @@ PrefabInstance:
     - target: {fileID: 4634588030337244314, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
       propertyPath: m_Name
       value: Sad_Gem (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634588030337244314, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9201974db94c79f4d84bc6f6d7c11020, type: 3}
